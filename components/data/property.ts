@@ -1,77 +1,107 @@
-export const properties = [
+export type Property = {
+  id: number;
+  name: string;
+  location: string;
+  type: string;
+  price: number;
+  currency: string;
+  rating: number;
+  guests: number;
+  bedrooms: number;
+  image: string;
+  amenities: string[];
+};
+
+export type Category = {
+  name: string;
+  active: boolean;
+};
+
+export const properties: Property[] = [
   {
     id: 1,
-    type: "VILLA",
-    name: "Five Palm Jumeirah Beachfront Villa - Pool, Jacuzzi",
-    guests: 8,
-    bedrooms: 4,
-    price: 1920,
-    rating: 4.6,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
+    name: "Villa moderne à Cocody",
+    location: "Cocody, Abidjan",
+    type: "Villa",
+    price: 85000,
+    currency: "FCFA",
+    rating: 4.8,
+    guests: 6,
+    bedrooms: 3,
+    image: "/assets/images/illustrations/page-properties/items-1.jpg",
+    amenities: ["Wifi", "Parking", "Piscine"]
   },
   {
     id: 2,
-    type: "VILLA",
-    name: "Two Bedroom Arabian Summerhouse Family Suite",
-    guests: 6,
-    bedrooms: 3,
-    price: 890,
-    rating: 3.2,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
+    name: "Appartement vue mer à Grand-Bassam",
+    location: "Grand-Bassam",
+    type: "Appartement",
+    price: 45000,
+    currency: "FCFA",
+    rating: 4.6,
+    guests: 4,
+    bedrooms: 2,
+    image: "/assets/images/illustrations/page-properties/items-2.jpg",
+    amenities: ["Wifi", "Vue mer", "Climatisation"]
   },
   {
     id: 3,
-    type: "VILLA",
-    name: "Beach Front Villa in Five Palm Jumeirah Hotel",
-    guests: 6,
-    bedrooms: 2,
-    price: 750,
-    rating: 5.0,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
+    name: "Résidence de standing à Marcory",
+    location: "Marcory, Abidjan",
+    type: "Résidence",
+    price: 95000,
+    currency: "FCFA",
+    rating: 4.9,
+    guests: 8,
+    bedrooms: 4,
+    image: "/assets/images/illustrations/page-properties/items-3.jpg",
+    amenities: ["Wifi", "Parking", "Sécurité 24h"]
   },
   {
     id: 4,
-    type: "VILLA",
-    name: "Arabian Summerhouse Superior",
-    guests: 8,
+    name: "Maison traditionnelle à Yamoussoukro",
+    location: "Yamoussoukro",
+    type: "Maison",
+    price: 35000,
+    currency: "FCFA",
+    rating: 4.4,
+    guests: 5,
     bedrooms: 3,
-    price: 1299,
-    rating: 3.8,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
+    image: "/assets/images/illustrations/page-properties/items-4.jpg",
+    amenities: ["Wifi", "Jardin", "Parking"]
   },
   {
     id: 5,
-    type: "VILLA",
-    name: "Stylish Luxury Sunshine Villa Perfect for Families",
-    guests: 4,
-    bedrooms: 2,
-    price: 1000,
-    rating: 4.9,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
+    name: "Studio luxueux à Plateau",
+    location: "Plateau, Abidjan",
+    type: "Studio",
+    price: 25000,
+    currency: "FCFA",
+    rating: 4.3,
+    guests: 2,
+    bedrooms: 1,
+    image: "/assets/images/illustrations/page-properties/items-5.jpg",
+    amenities: ["Wifi", "Climatisation", "Centre ville"]
   },
   {
     id: 6,
-    type: "VILLA",
-    name: "Spacious Garden Villa near the Beach",
-    guests: 6,
-    bedrooms: 3,
-    price: 1450,
-    rating: 3.6,
-    image: "/placeholder.svg?height=300&width=400",
-    isFavorite: false,
-  },
+    name: "Villa avec piscine à Bouaké",
+    location: "Bouaké",
+    type: "Villa",
+    price: 65000,
+    currency: "FCFA",
+    rating: 4.7,
+    guests: 7,
+    bedrooms: 4,
+    image: "/assets/images/illustrations/page-properties/items-6.jpg",
+    amenities: ["Wifi", "Piscine", "Jardin"]
+  }
 ]
 
-export const categories = [
-  { name: "ALL CATEGORY", active: false },
-  { name: "House", active: false },
-  { name: "Hotel", active: false },
-  { name: "Villa", active: true },
-  { name: "Apartment", active: false },
-  { name: "Camp House", active: false },
+export const categories: Category[] = [
+  { name: "Tout", active: true },
+  { name: "Villas", active: false },
+  { name: "Appartements", active: false },
+  { name: "Maisons", active: false },
+  { name: "Studios", active: false }
 ]

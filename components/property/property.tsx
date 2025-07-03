@@ -1,23 +1,21 @@
-"use client"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Heart, Grid3X3, List, Filter, MapPin, Star, ChevronDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Search, Heart, Grid3X3, List, Filter, MapPin, Star, ChevronDown, Bed, Users, Wifi, Car, Waves, Mountain } from "lucide-react"
+import { properties, categories } from "../data/property"
 import Image from "next/image"
-import Link from "next/link"
-import { properties } from "../data/property"
-import { categories } from "../data/property"
-
 
 
 export default function PropertyPage() {
   const [favorites, setFavorites] = useState<number[]>([])
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [activeCategory, setActiveCategory] = useState<string>("Tout")
 
   const toggleFavorite = (propertyId: number) => {
-    setFavorites((prev) => (prev.includes(propertyId) ? prev.filter((id) => id !== propertyId) : [...prev, propertyId]))
+    setFavorites((prev) => 
+      prev.includes(propertyId) 
+        ? prev.filter((id) => id !== propertyId) 
+        : [...prev, propertyId]
+    )
   }
 
   const renderStars = (rating: number) => {
@@ -28,19 +26,29 @@ export default function PropertyPage() {
     return (
       <div className="flex items-center space-x-1">
         {[...Array(fullStars)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+          <Star key={i} className="w-3 h-3 fill-[#EADD8E] text-[#EADD8E]" />
         ))}
-        {hasHalfStar && <Star className="w-4 h-4 fill-yellow-400/50 text-yellow-400" />}
+        {hasHalfStar && <Star className="w-3 h-3 fill-[#EADD8E]/50 text-[#EADD8E]" />}
         {[...Array(emptyStars)].map((_, i) => (
-          <Star key={i} className="w-4 h-4 text-gray-300" />
+          <Star key={i} className="w-3 h-3 text-gray-300" />
         ))}
       </div>
     )
   }
 
+  const getAmenityIcon = (amenity: string) => {
+    switch(amenity) {
+      case "Wifi": return <Wifi className="w-4 h-4" />
+      case "Parking": return <Car className="w-4 h-4" />
+      case "Piscine": return <Waves className="w-4 h-4" />
+      case "Vue mer": return <Mountain className="w-4 h-4" />
+      default: return <div className="w-4 h-4 bg-[#A07539] rounded-full" />
+    }
+  }
+
   return (
     <motion.div
-      className="min-h-screen bg-gray-50"
+      className="min-h-screen bg-gradient-to-br from-[#EADD8E]/10 to-[#A07539]/5"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -48,58 +56,56 @@ export default function PropertyPage() {
     >
       {/* Header */}
       <motion.header
-        className="bg-white shadow-sm border-b"
+        className="bg-white/90 backdrop-blur-sm shadow-sm border-b border-[#EADD8E]/30"
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.6 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/">
-                <motion.button className="text-2xl font-bold text-pink-500" whileHover={{ scale: 1.05 }}>
-                  🏠 aceplace
-                </motion.button>
-              </Link>
-              <div className="hidden md:flex items-center space-x-2">
-                <span className="text-sm text-gray-600">EN</span>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
-              </div>
-            </div>
-
-            <div className="flex-1 max-w-md mx-8">
-              <Link href="/search">
-                <div className="relative cursor-pointer">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    placeholder="Search"
-                    className="pl-10 bg-gray-100 border-0 focus:bg-white cursor-pointer"
-                    readOnly
-                  />
-                </div>
-              </Link>
-            </div>
-
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-sm text-gray-600 hover:text-gray-900">
-                Buy
-              </Button>
-              <Button variant="ghost" className="text-sm text-gray-600 hover:text-gray-900">
-                Sell
-              </Button>
-              <Button variant="ghost" className="text-sm text-gray-600 hover:text-gray-900">
-                Rent
-              </Button>
-              <Button variant="ghost" className="text-sm text-gray-600 hover:text-gray-900">
-                Contact us
-              </Button>
-              <div className="flex items-center space-x-2 text-sm">
-                <span className="text-gray-600">🇺🇸 USD</span>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+              <div className="flex items-center space-x-4">
+            {/* Logo avec image */}
+            <Image
+              src="/assets/images/logo-sans-fond.png" // Remplace par le chemin correct de ton image
+              alt="Logo Joya Immo"
+              width={92}
+              height={92}
+              className="rounded-lg object-cover"
+            />
+            {/* <motion.h1 
+              className="text-2xl font-bold text-[#252525]"
+              whileHover={{ scale: 1.05 }}
+            >
+              Joya Immo
+            </motion.h1> */}
+            </div>
+          </div>
+
+
+            {/* Barre de recherche */}
+            <div className="flex-1 max-w-md mx-4 sm:mx-8">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#A07539] w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Rechercher un logement..."
+                  className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-lg focus:bg-white focus:ring-2 focus:ring-[#A07539] transition-all"
+                />
               </div>
-              <Link href="/login">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2 rounded-full">Login</Button>
-              </Link>
+            </div>
+
+            {/* Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
+              <button className="text-sm text-[#252525] hover:text-[#A07539] transition-colors">
+                Louer
+              </button>
+              <button className="text-sm text-[#252525] hover:text-[#A07539] transition-colors">
+                Vendre
+              </button>
+              <button className="px-4 py-2 bg-[#A07539] hover:bg-[#252525] text-white rounded-lg text-sm transition-colors">
+                Connexion
+              </button>
             </div>
           </div>
         </div>
@@ -107,25 +113,27 @@ export default function PropertyPage() {
 
       {/* Categories */}
       <motion.div
-        className="bg-white border-b"
+        className="bg-white/90 backdrop-blur-sm border-b border-[#EADD8E]/30"
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-8 py-4 overflow-x-auto">
+          <div className="flex items-center space-x-4 sm:space-x-8 py-4 overflow-x-auto">
             {categories.map((category, index) => (
               <motion.button
                 key={category.name}
                 className={`flex items-center space-x-2 px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                  category.active ? "bg-pink-500 text-white" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  activeCategory === category.name
+                    ? "bg-[#A07539] text-white" 
+                    : "text-[#252525] hover:text-[#A07539] hover:bg-[#EADD8E]/20"
                 }`}
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 + index * 0.05, duration: 0.5 }}
                 whileHover={{ scale: 1.05 }}
+                onClick={() => setActiveCategory(category.name)}
               >
-                {category.active && <Grid3X3 className="w-4 h-4" />}
                 <span className="text-sm font-medium">{category.name}</span>
               </motion.button>
             ))}
@@ -137,40 +145,45 @@ export default function PropertyPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Location and Controls */}
         <motion.div
-          className="flex items-center justify-between mb-8"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 space-y-4 sm:space-y-0"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
           <div>
             <div className="flex items-center space-x-2 mb-2">
-              <MapPin className="w-5 h-5 text-blue-500" />
-              <span className="text-lg font-semibold text-gray-900">Dubai City, Jumeirah</span>
+              <MapPin className="w-5 h-5 text-[#A07539]" />
+              <span className="text-lg font-semibold text-[#252525]">Abidjan, Côte d'Ivoire</span>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">Dubai City, Jumeirah Villa</h1>
-            <p className="text-gray-600 mt-1">649 Villas available in Dubai City</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[#252525]">Logements disponibles</h1>
+            <p className="text-gray-600 mt-1">{properties.length} propriétés disponibles</p>
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-white rounded-lg border p-1">
-              <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewMode("grid")}>
+            <div className="flex items-center space-x-2 bg-white rounded-lg border border-[#EADD8E]/30 p-1">
+              <button 
+                className={`p-2 rounded ${viewMode === "grid" ? "bg-[#A07539] text-white" : "text-[#252525] hover:bg-[#EADD8E]/20"}`}
+                onClick={() => setViewMode("grid")}
+              >
                 <Grid3X3 className="w-4 h-4" />
-              </Button>
-              <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewMode("list")}>
+              </button>
+              <button 
+                className={`p-2 rounded ${viewMode === "list" ? "bg-[#A07539] text-white" : "text-[#252525] hover:bg-[#EADD8E]/20"}`}
+                onClick={() => setViewMode("list")}
+              >
                 <List className="w-4 h-4" />
-              </Button>
+              </button>
             </div>
-            <Button variant="outline" className="flex items-center space-x-2 bg-transparent">
-              <Filter className="w-4 h-4" />
-              <span>Filters</span>
-              <ChevronDown className="w-4 h-4" />
-            </Button>
+            <button className="flex items-center space-x-2 px-4 py-2 bg-white border border-[#EADD8E]/30 rounded-lg hover:bg-[#EADD8E]/20 transition-colors">
+              <Filter className="w-4 h-4 text-[#A07539]" />
+              <span className="text-[#252525]">Filtres</span>
+            </button>
           </div>
         </motion.div>
 
-        {/* Property Grid */}
+   {/* Property Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}`}
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -178,20 +191,29 @@ export default function PropertyPage() {
           {properties.map((property, index) => (
             <motion.div
               key={property.id}
-              className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+              className={`bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-[#EADD8E]/30 ${
+                viewMode === "list" ? "flex" : ""
+              }`}
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6 + index * 0.1, duration: 0.6 }}
               whileHover={{ y: -5 }}
             >
-              <div className="relative">
-                <Image
-                  src={property.image || "/placeholder.svg"}
-                  alt={property.name}
-                  width={400}
-                  height={300}
-                  className="w-full h-48 object-cover"
-                />
+              <div className={`relative ${viewMode === "list" ? "w-1/3" : ""}`}>
+                <div className={`${viewMode === "list" ? "h-full" : "h-48"} overflow-hidden`}>
+                  <img 
+                    src={property.image} 
+                    alt={property.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      // e.currentTarget.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="w-full h-full bg-gradient-to-br from-[#EADD8E]/30 to-[#A07539]/30 flex items-center justify-center" style={{display: 'none'}}>
+                    <div className="text-6xl opacity-20">🏠</div>
+                  </div>
+                </div>
                 <button
                   className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
                   onClick={() => toggleFavorite(property.id)}
@@ -202,22 +224,45 @@ export default function PropertyPage() {
                     }`}
                   />
                 </button>
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium text-gray-700">
+                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium text-[#252525]">
                   {property.type}
                 </div>
               </div>
 
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.name}</h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  {property.guests} guests • {property.bedrooms} bedrooms
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg font-bold text-gray-900">From {property.price} USD</span>
+              <div className={`p-4 ${viewMode === "list" ? "flex-1" : ""}`}>
+                <h3 className="font-semibold text-[#252525] mb-2 line-clamp-2">{property.name}</h3>
+                <div className="flex items-center space-x-1 mb-2">
+                  <MapPin className="w-4 h-4 text-[#A07539]" />
+                  <span className="text-sm text-gray-600">{property.location}</span>
+                </div>
+                
+                <div className="flex items-center space-x-4 mb-3 text-sm text-gray-600">
+                  <div className="flex items-center space-x-1">
+                    <Users className="w-4 h-4" />
+                    <span>{property.guests} personnes</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <span className="text-sm font-medium text-gray-900">{property.rating}</span>
+                    <Bed className="w-4 h-4" />
+                    <span>{property.bedrooms} chambres</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 mb-3">
+                  {property.amenities.slice(0, 3).map((amenity, i) => (
+                    <div key={i} className="flex items-center space-x-1 text-xs bg-[#EADD8E]/20 px-2 py-1 rounded-full">
+                      {getAmenityIcon(amenity)}
+                      <span className="text-[#252525]">{amenity}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-lg font-bold text-[#252525]">{property.price.toLocaleString()} {property.currency}</span>
+                    <span className="text-sm text-gray-600">/nuit</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <span className="text-sm font-medium text-[#252525]">{property.rating}</span>
                     {renderStars(property.rating)}
                   </div>
                 </div>
