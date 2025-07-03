@@ -5,43 +5,9 @@ import { motion } from "framer-motion"
 import { Search, User, ArrowRight, Play, Pause, Twitter, Instagram, Facebook } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-
-const destinations = [
-  {
-    id: 1,
-    name: "Abidjan - Plateau",
-    image: "/assets/images/illustrations/page-accueil/eglise.jpg",
-    description:
-      "Découvrez le cœur économique de la Côte d'Ivoire avec ses gratte-ciels modernes, ses bureaux prestigieux et ses appartements de luxe au centre-ville.",
-  },
-  {
-    id: 2,
-    name: "Grand-Bassam",
-    image: "/assets/images/illustrations/page-accueil/place-about-exterieur.jpg",
-    description:
-      "Investissez dans cette ville historique classée UNESCO, entre villas coloniales rénovées et nouvelles résidences face à l'océan Atlantique.",
-  },
-  {
-    id: 3,
-    name: "Yamoussoukro",
-    image: "/assets/images/illustrations/page-accueil/savane.jpg",
-    description:
-      "Explorez les opportunités immobilières dans la capitale politique, avec ses grands espaces verts et son potentiel de développement urbain.",
-  },
-  {
-    id: 4,
-    name: "San-Pédro",
-    image: "/assets/images/illustrations/page-accueil/coline.jpg",
-    description:
-      "Profitez du boom économique de ce port dynamique avec des projets immobiliers modernes près des installations portuaires et des plages.",
-  },
-];
-
-const popularSpots = [
-  { name: "Cocody, Villa Moderne", image: "/assets/images/illustrations/page-accueil/maison-interieur-blanc.png" },
-  { name: "Marcory, Appartements", image: "/assets/images/illustrations/page-accueil/place-about.jpg" },
-  { name: "Riviera, Résidences", image: "/assets/images/illustrations/page-accueil/maison-prochedestation.jpg" },
-]
+import { destinations } from "./data/main"
+import { popularSpots } from "./data/main"
+import Link from "next/link"
 
 export default function MainPage() {
   const [currentDestination, setCurrentDestination] = useState(0)
@@ -78,7 +44,7 @@ export default function MainPage() {
         key={currentDestination}
         className="absolute inset-0 z-0"
         initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.3 }}
+        animate={{ scale: 1, opacity: 0.7 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ duration: 1.5, ease: "easeInOut" }}
       >
@@ -88,10 +54,11 @@ export default function MainPage() {
           fill
           className="object-cover"
         />
+        {/* Overlay léger uniquement sur les zones de texte */}
         <div 
           className="absolute inset-0"
           style={{ 
-            background: `linear-gradient(135deg, rgba(37, 37, 37, 0.8) 0%, rgba(160, 117, 57, 0.6) 50%, rgba(37, 37, 37, 0.8) 100%)` 
+            background: `linear-gradient(to right, rgba(37, 37, 37, 0.85) 0%, rgba(37, 37, 37, 0.2) 50%, rgba(37, 37, 37, 0.4) 100%)` 
           }}
         />
       </motion.div>
@@ -111,45 +78,63 @@ export default function MainPage() {
               whileHover={{ scale: 1.05 }}
             >
               <img 
-                src="/assets/images/logo-sans-fond.png" 
-                alt="Logo Immobilier Côte d'Ivoire" 
-                className="w-10 h-10 md:w-12 md:h-12 object-contain"
+                src="/assets/images/logo-sans-fond.png"
+                alt="Logo Joya Immo"
+                className="w-20 h-20 md:w-24 md:h-24 object-contain"
               />
             </motion.div>
-            <div className="hidden md:flex space-x-4 lg:space-x-6">
+            {/* <div className="hidden md:flex space-x-4 lg:space-x-6">
               {["Accueil", "À Propos", "Contact", "Propriétés"].map((item, index) => (
                 <motion.a
                   key={item}
                   href="#"
-                  className="text-sm lg:text-base transition-colors"
-                  style={{ color: '#EADD8E', opacity: 0.9 }}
+                  className="text-sm lg:text-base transition-all duration-300 px-3 py-2 rounded-lg relative overflow-hidden group"
+                  style={{ color: '#FFFFFF', fontWeight: '500' }}
                   initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 0.9 }}
+                  animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
-                  whileHover={{ y: -2, opacity: 1 }}
+                  whileHover={{ y: -2 }}
                 >
-                  {item}
+                  <span className="relative z-10">{item}</span>
+                  <motion.div
+                    className="absolute inset-0 rounded-lg"
+                    style={{ backgroundColor: '#EADD8E' }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileHover={{ scale: 1, opacity: 0.2 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
+                    style={{ backgroundColor: '#A07539' }}
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </motion.a>
               ))}
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center space-x-2 md:space-x-4">
+            <Link href="/search">
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:bg-white/10"
-              style={{ color: '#EADD8E' }}
+              className="hover:bg-white/20 transition-all duration-300 rounded-lg"
+              style={{ color: '#FFFFFF' }}
             >
               <Search className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
+            </Link>
+            <Link href="/login">
             <Button 
               variant="ghost" 
               size="icon" 
-              className="hover:bg-white/10"
-              style={{ color: '#EADD8E' }}
+              className="hover:bg-white/20 transition-all duration-300 rounded-lg"
+              style={{ color: '#FFFFFF' }}
             >
               <User className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
+            </Link>
           </div>
         </motion.nav>
 
@@ -164,19 +149,19 @@ export default function MainPage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6"
-                style={{ color: '#EADD8E' }}
+                className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 md:mb-6 drop-shadow-2xl"
+                style={{ color: '#FFFFFF', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                CÔTE D'IVOIRE
+                JOYA IMMO
               </motion.h1>
               <motion.p
-                className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl leading-relaxed"
-                style={{ color: '#EADD8E', opacity: 0.9 }}
+                className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl leading-relaxed drop-shadow-lg"
+                style={{ color: '#FFFFFF', textShadow: '1px 1px 2px rgba(0,0,0,0.7)', opacity: 0.95 }}
                 initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 0.9 }}
+                animate={{ y: 0, opacity: 0.95 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
                 {destinations[currentDestination].description}
@@ -187,6 +172,7 @@ export default function MainPage() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
               >
+                <Link href="/properties">
                 <Button
                   className="backdrop-blur-sm px-6 md:px-8 py-2 md:py-3 rounded-full text-sm md:text-base"
                   style={{ 
@@ -194,11 +180,12 @@ export default function MainPage() {
                     color: '#EADD8E',
                     border: '1px solid rgba(234, 221, 142, 0.3)'
                   }}
-                  onClick={() => handleDestinationChange((currentDestination + 1) % destinations.length)}
+                  // onClick={() => handleDestinationChange((currentDestination + 1) % destinations.length)}
                 >
                   Explorer
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+                </Link>
                 <Button
                   variant="ghost"
                   size="icon"

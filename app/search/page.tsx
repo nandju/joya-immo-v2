@@ -3,22 +3,25 @@
 import { useState, useEffect } from "react"
 import { AnimatePresence } from "framer-motion"
 import LoaderPage from "@/components/loader-page"
-import MainPage from "@/components/main-page"
+import SearchPage from "@/components/search/search"
 
-export default function Home() {
+
+export default function Search() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 2000)
 
     return () => clearTimeout(timer)
   }, [])
 
   return (
     <div className="min-h-screen">
-      <AnimatePresence mode="wait">{isLoading ? <LoaderPage key="loader" /> : <MainPage key="main" />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {isLoading ? <LoaderPage key="loader" /> : <SearchPage key="search" />}
+      </AnimatePresence>
     </div>
   )
 }
