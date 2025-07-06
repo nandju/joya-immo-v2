@@ -219,7 +219,7 @@ export default function MainPage() {
           </div>
 
           {/* Right Content - Popular Destinations */}
-          <motion.div
+          {/* <motion.div
             className="lg:col-span-1 flex flex-col justify-center order-1 lg:order-2"
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -276,11 +276,11 @@ export default function MainPage() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Social Media Icons */}
-        <motion.div
+        {/* <motion.div
           className="absolute bottom-4 md:bottom-8 left-4 md:left-8 flex space-x-3 md:space-x-4"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -334,7 +334,7 @@ export default function MainPage() {
           >
             <Facebook className="h-3 w-3 md:h-4 md:w-4" />
           </motion.button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </motion.div>
   )
